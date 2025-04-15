@@ -362,22 +362,57 @@
             <p class="section-subtitle">How can you communicate?</p>
             <h6 class="section-title mb-5">Contact Me</h6>
             <!-- contact form -->
-            <form action="http://shivagallery.in/contact-form-api.php" method="POST" class="contact-form col-md-10 col-lg-8 m-auto">
+            <form action="" class="contact-form col-md-10 col-lg-8 m-auto" id="contact-form">
                 <div class="form-row">
                     <div class="form-group col-sm-6">
-                        <input type="text" name="name" size="50" class="form-control" placeholder="Your Name" required>
+                        <input type="text" size="50" class="form-control" id="name" placeholder="Your Name" required>                 
                     </div>
                     <div class="form-group col-sm-6">
-                        <input type="email" name="email" class="form-control" placeholder="Enter Email" required>
+                        <input type="email" class="form-control" id="email" placeholder="Enter Email" required>                 
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <input type="text" class="form-control" id="mobileno" placeholder="Your Mobile Number" required>                 
                     </div>
                     <div class="form-group col-sm-12">
-                        <textarea name="comment" rows="6" class="form-control" placeholder="Write Something"></textarea>
+                        <textarea name="comment" id="comment" rows="6" class="form-control" placeholder="Write Something"></textarea>
                     </div>
                     <div class="form-group col-sm-12 mt-3">
-                        <input type="submit" value="Send Message" class="btn btn-outline-primary rounded">
+                        <input type="submit" value="Send Message" class="btn btn-outline-primary rounded">                  
                     </div>
-                </div>
+                </div>  
             </form>
+            
+            <script>
+                // Adding an event listener to the form submission
+                document.getElementById('contact-form').addEventListener('submit', function(event) {
+                    event.preventDefault();  // Prevent default form submission
+            
+                    // Collecting form data
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const mobileno = document.getElementById('mobileno').value;
+                    const message = document.getElementById('comment').value;
+            
+                    // Setting up the request to the API endpoint
+                    const formData = new FormData();
+                    formData.append('name', name);
+                    formData.append('emailid', email);
+                    formData.append('mobileno', mobileno);  // Using dynamic mobile number from the form
+                    formData.append('msg', message);
+            
+                    // Creating the request
+                    const request = new XMLHttpRequest();
+                    request.open('POST', 'https://shivagallery.in/enquiry_api.php', true);
+                    request.onreadystatechange = function() {
+                        if (request.readyState === 4 && request.status === 200) {
+                            // You can handle success here if you want
+                            console.log('Form submitted successfully');
+                        }
+                    };
+                    // Sending the form data to the API
+                    request.send(formData);
+                });
+            </script>
             <!-- end of contact form -->
         </div><!-- end of container -->
     </section><!-- end of contact section -->
